@@ -1,0 +1,15 @@
+:root{
+    --bg-primary: #1c1917;
+    --bg-secondary: #292524;
+    --text-primary: #e7e5e4;
+    --text-secondary: #a8a29e;
+    --accent: #f59e0b;
+    --accent-hover: #d97706;
+}
+
+body{
+    background-color: var(--bg-primary);
+}
+p{
+    color: white;
+}
