@@ -7,7 +7,7 @@ import { FeedbackPanel } from "../sessionView/FeedbackPanel"
 
 export function Widget() {
 
-    const {error, startSession } = useAnthropicChat()
+    const {error, startSession, sendAnswer, messages } = useAnthropicChat()
     const { state } = useSession()
 
   return (
@@ -16,7 +16,7 @@ export function Widget() {
         {state.status === 'starting' && <p>Ładowanie...</p>}
         {error && <p>{error}</p>}
         {state.currentEntry && <div><KnowledgeCard entry={state.currentEntry} /><VocabularyCard entry={state.currentEntry}/></div>}
-        {state.currentEntry && <SocraticDialog/>}
+        {state.status === 'dialog' && <SocraticDialog messages={messages} sendAnswer={sendAnswer}/>}
         {state.status === 'feedback' && <FeedbackPanel/>}
     </div>
   )

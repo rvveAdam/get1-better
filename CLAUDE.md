@@ -1,6 +1,6 @@
 # CLAUDE.md — Get Better 1%
 # Mentor instructions. Aktualizowany po każdej sesji nauki.
-# Ostatnia aktualizacja: 2026-04-21 | Aktualny etap: ETAP 4
+# Ostatnia aktualizacja: 2026-04-22 | Aktualny etap: ETAP 4
 
 ---
 
@@ -102,9 +102,10 @@ export function SocraticDialog() {
 - [x] Etap 2: Integracja LLM — 2026-04-13
 - [x] Etap 3: Dialog sokratejski + Feedback — MVP — 2026-04-17
 - [x] Etap 3 dopracowanie: multi-turn conversation (SocraticDialog połączony z sendAnswer), pierwszy commit na GitHub — 2026-04-21
+- [x] Etap 4 start: naprawa krytycznego bugu (izolacja instancji hooka), naturalny flow konwersacji z zachowanie-modelu-llm.md jako system prompt, przeprojektowanie FeedbackPanel — 2026-04-22
 
 ### Aktualny etap
-**Etap 4** — do ustalenia na podstawie roadmap.md
+**Etap 4** — naturalna konwersacja działa. Następny krok: Markdown rendering + UserProfile persistence + zapis do Obsidian
 
 ### Poznane koncepty
 - **Komponent React** — samowystarczalny kawałek UI, analogia: Gutenberg block
@@ -119,6 +120,10 @@ export function SocraticDialog() {
 - **`.map()` w JSX** — renderowanie listy elementów, każdy element potrzebuje unikalnego `key`
 - **`prev =>` w setState** — callback z aktualną wartością stanu, bezpieczniejszy niż bezpośrednie użycie zmiennej stanu
 - **Git flow** — `git init` → `git add .` → `git commit` → `git push`, rozumie różnicę między staged a untracked
+- **Izolacja instancji hooka** — każde wywołanie `useHook()` tworzy osobną kopię stanu; rozwiązanie: wywołać raz i przekazać przez props
+- **Props drilling** — przekazywanie `sendAnswer` i `messages` z Widget do SocraticDialog zamiast duplikowania hooka
+- **Vite `?raw` import** — import pliku tekstowego jako string przy kompilacji (`import x from 'plik.md?raw'`)
+- **Radio buttons z `.map()`** — renderowanie opcji z tablicy obiektów, `value` jako klucz maszynowy, `label` jako tekst dla użytkownika
 
 ### Notatki mentora
 - Developer prosi o scaffold wklejony bezpośrednio w chacie — nie odsyłaj do roadmap.md, zawsze wklej fragment tutaj
@@ -132,3 +137,6 @@ export function SocraticDialog() {
 - **[2026-04-21] Mylenie settera ze zmienną** — próbował `setTextInput(sendAnswer)` zamiast wywołać funkcję i osobno wyczyścić input. Wymaga przypominania że setter ≠ wywołanie funkcji.
 - **[2026-04-21] Nazewnictwo w .map()** — mylił nazwę elementu (`message`) z polem (`content`) i z typem TypeScript (`Message`). Warto tłumaczyć: nazwa w nawiasie to twój alias, możesz ją nazwać jak chcesz.
 - **[2026-04-21] Git** — pierwszy raz przeszedł przez pełny flow (init → add → commit → push). Rozumie koncepty, potrzebuje jeszcze praktyki z konfliktami merge.
+- **[2026-04-22] Typy vs wartości w interface** — mylił wartości (`sendAnswer`, `[]`) z typami (`(answer: string) => void`, `Message[]`). Pomogło zdanie: "interface opisuje kształt, nie konkretne wartości".
+- **[2026-04-22] Dawanie gotowego kodu** — mentor złamał zasadę przy radio buttons w `.map()`. Następnym razem naprowadzać pytaniami nawet gdy developer pyta o składnię.
+- **[2026-04-22] Krytyczny bug — izolacja hooka** — `useAnthropicChat()` był wywoływany dwukrotnie (Widget + SocraticDialog), tworząc dwie osobne kopie `messages`. Developer samodzielnie zdiagnozował problem po naprowadzeniu pytaniem "ile razy wywołujesz hook?".

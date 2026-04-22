@@ -1,36 +1,30 @@
-import { useSession } from "../../context/SessionContext" 
+import { useSession } from "../../context/SessionContext"
 import { useState } from "react"
-import { useAnthropicChat } from "../../hooks/useAnthropicChat"
+import type { Message } from "../../types"
 
-export function SocraticDialog() {
+export interface SocraticDialogProps {
+    messages: Message[]
+    sendAnswer: (answer: string) => void
+}
 
-    const { state, dispatch } = useSession()
-    const { sendAnswer, messages } = useAnthropicChat()
+export function SocraticDialog({ messages, sendAnswer }: SocraticDialogProps) {
+
+    const { dispatch } = useSession()
     const [ textInput, setTextInput ] = useState<string>('')
-    const [ question, setQuestions ] = useState<number>(0)
 
     async function handleSubmit() {
-
         await sendAnswer(textInput)
         setTextInput('')
-        const questions = state.currentEntry?.questions
-        if (!questions) return
-        if (question === questions.length - 1) {
-            dispatch({ type: 'COMPLETE_SESSION' }) 
-        } else {
-            setQuestions(question + 1)
-        }
     }
-
 
     return (
         <div className="socratic-dialog">
-            <p>{state.currentEntry?.questions[question]}</p>
             {messages.map((message) => (
                 <p key={message.id}>{message.content}</p>
             ))}
             <input onChange={(e) => setTextInput(e.target.value)} value={textInput}/>
-            <button onClick={ () => handleSubmit()}>Wyślij</button>
+            <button onClick={() => handleSubmit()}>Wyślij</button>
+            <button onClick={() => dispatch({ type: 'COMPLETE_SESSION' })}>Idź do feedbacku</button>
         </div>
     )
 }

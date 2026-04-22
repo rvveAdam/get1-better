@@ -1,4 +1,4 @@
-import type { SessionState, LearningEntry } from '../types/index'
+import type { SessionState, LearningEntry, SessionStatus } from '../types/index'
 
 export type SessionAction =
     | {type: 'START_SESSION'}
@@ -6,6 +6,7 @@ export type SessionAction =
     | {type: 'SET_ERROR'; payload: string}
     | {type: 'SET_LOADING'; payload: boolean}
     | {type: 'ADD_ANSWER'; payload: string}
+    | {type: 'SET_STATUS'; payload: SessionStatus}
     | {type: 'COMPLETE_SESSION'}
     | {type: 'RESET_SESSION'}
 
@@ -37,6 +38,8 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
     return {
         ...state,currentEntry: {...state.currentEntry,answers: [...(state.currentEntry.answers ?? []), action.payload]}
     }
+    case 'SET_STATUS':
+        return{ ...state, status: action.payload}
     case 'RESET_SESSION':
         return initialState
     default:
