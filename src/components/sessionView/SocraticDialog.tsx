@@ -1,3 +1,5 @@
+// TUTAJ: zaimportuj ReactMarkdown z 'react-markdown'
+import ReactMarkdown from 'react-markdown'
 import { useSession } from "../../context/SessionContext"
 import { useState } from "react"
 import type { Message } from "../../types"
@@ -20,7 +22,7 @@ export function SocraticDialog({ messages, sendAnswer }: SocraticDialogProps) {
     return (
         <div className="socratic-dialog">
             {messages.map((message) => (
-                <p key={message.id}>{message.content}</p>
+                <ReactMarkdown key={message.id}>{message.content}</ReactMarkdown>
             ))}
             <input onChange={(e) => setTextInput(e.target.value)} value={textInput}/>
             <button onClick={() => handleSubmit()}>Wyślij</button>
