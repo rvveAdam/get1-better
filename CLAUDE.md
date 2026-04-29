@@ -105,7 +105,10 @@ export function SocraticDialog() {
 - [x] Etap 4 start: naprawa krytycznego bugu (izolacja instancji hooka), naturalny flow konwersacji z zachowanie-modelu-llm.md jako system prompt, przeprojektowanie FeedbackPanel — 2026-04-22
 
 ### Aktualny etap
-**Etap 4** — naturalna konwersacja działa. Następny krok: Markdown rendering + UserProfile persistence + zapis do Obsidian
+**Etap 4** — Markdown rendering gotowy. Następny krok: UserProfile persistence + zapis do Obsidian
+
+### Do zrobienia na końcu (Etap 5 — Polish)
+- [ ] **⚠️ UI: Wiedza i słówko od nowej linii** — aktualnie Claude zwraca je w jednej linii obok siebie. Przy pracy nad stylami: wymusić żeby każde z nich zaczynało się od nowej linijki (prawdopodobnie przez system prompt lub CSS `display: block` na elementach Markdown)
 
 ### Poznane koncepty
 - **Komponent React** — samowystarczalny kawałek UI, analogia: Gutenberg block
