@@ -1,6 +1,6 @@
 # CLAUDE.md — Get Better 1%
 # Mentor instructions. Aktualizowany po każdej sesji nauki.
-# Ostatnia aktualizacja: 2026-04-22 | Aktualny etap: ETAP 4
+# Ostatnia aktualizacja: 2026-04-29 | Aktualny etap: ETAP 4
 
 ---
 
