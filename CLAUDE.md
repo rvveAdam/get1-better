@@ -103,9 +103,10 @@ export function SocraticDialog() {
 - [x] Etap 3: Dialog sokratejski + Feedback — MVP — 2026-04-17
 - [x] Etap 3 dopracowanie: multi-turn conversation (SocraticDialog połączony z sendAnswer), pierwszy commit na GitHub — 2026-04-21
 - [x] Etap 4 start: naprawa krytycznego bugu (izolacja instancji hooka), naturalny flow konwersacji z zachowanie-modelu-llm.md jako system prompt, przeprojektowanie FeedbackPanel — 2026-04-22
+- [x] Etap 4 cd: Markdown rendering (react-markdown), UserProfile persistence (localStorage), Git branching workflow (feat/* → merge → push) — 2026-04-29
 
 ### Aktualny etap
-**Etap 4** — Markdown rendering gotowy. Następny krok: UserProfile persistence + zapis do Obsidian
+**Etap 4** — Markdown + UserProfile gotowe. Następny krok: zapis do Obsidian (MCP)
 
 ### Do zrobienia na końcu (Etap 5 — Polish)
 - [ ] **⚠️ UI: Wiedza i słówko od nowej linii** — aktualnie Claude zwraca je w jednej linii obok siebie. Przy pracy nad stylami: wymusić żeby każde z nich zaczynało się od nowej linijki (prawdopodobnie przez system prompt lub CSS `display: block` na elementach Markdown)
@@ -127,6 +128,10 @@ export function SocraticDialog() {
 - **Props drilling** — przekazywanie `sendAnswer` i `messages` z Widget do SocraticDialog zamiast duplikowania hooka
 - **Vite `?raw` import** — import pliku tekstowego jako string przy kompilacji (`import x from 'plik.md?raw'`)
 - **Radio buttons z `.map()`** — renderowanie opcji z tablicy obiektów, `value` jako klucz maszynowy, `label` jako tekst dla użytkownika
+- **`react-markdown`** — komponent zamieniający Markdown string na HTML; zastępuje `<p>` w `.map()`, `key` zostaje na zewnętrznym elemencie
+- **`localStorage`** — przeglądarkowy storage klucz-wartość; tylko stringi → `JSON.stringify` przed zapisem, `JSON.parse` po odczycie; analogia: `get_option()` / `update_option()` w WP
+- **`useEffect` z zależnością** — odpala się po każdej zmianie zależności (i raz przy pierwszym renderze); używane do synchronizacji stanu z localStorage
+- **Git branching workflow** — `git checkout -b feat/nazwa` → commit na branchu → `git merge` → `git branch -d` → `git push`; każdy feature na osobnym branchu, `main` zawsze czysty
 
 ### Notatki mentora
 - Developer prosi o scaffold wklejony bezpośrednio w chacie — nie odsyłaj do roadmap.md, zawsze wklej fragment tutaj
@@ -143,3 +148,6 @@ export function SocraticDialog() {
 - **[2026-04-22] Typy vs wartości w interface** — mylił wartości (`sendAnswer`, `[]`) z typami (`(answer: string) => void`, `Message[]`). Pomogło zdanie: "interface opisuje kształt, nie konkretne wartości".
 - **[2026-04-22] Dawanie gotowego kodu** — mentor złamał zasadę przy radio buttons w `.map()`. Następnym razem naprowadzać pytaniami nawet gdy developer pyta o składnię.
 - **[2026-04-22] Krytyczny bug — izolacja hooka** — `useAnthropicChat()` był wywoływany dwukrotnie (Widget + SocraticDialog), tworząc dwie osobne kopie `messages`. Developer samodzielnie zdiagnozował problem po naprowadzeniu pytaniem "ile razy wywołujesz hook?".
+- **[2026-04-29] Typy w interface — `[]` vs `string[]`** — mylił `profile: object` zamiast `profile: UserProfile`. Wymaga przypominania: nie piszemy `object`, piszemy konkretną nazwę interfejsu.
+- **[2026-04-29] Destrukturyzacja obiekt vs tablica** — próbował `const [profile, setProfile] = useUserProfile()` zamiast `const { profile, setProfile }`. Hook zwraca obiekt `{}`, nie tablicę `[]`.
+- **[2026-04-29] JSON.stringify/parse** — nie pamiętał mechanizmu serializacji; pomogła analogia "spakowanie przed zapisem do bazy". Warto przypominać przy każdym użyciu localStorage.
